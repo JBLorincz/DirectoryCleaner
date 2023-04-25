@@ -1,6 +1,7 @@
 ﻿using CommandLine;
 using DirectoryCleaner;
 using static DirectoryCleaner.OSObjectFactory;
+
 bool verboseMode = false;
 
 string sourceDirectory = "";
@@ -24,8 +25,11 @@ Parser.Default.ParseArguments<Options>(args)
                    });
 Console.WriteLine("");
 
+if (string.IsNullOrWhiteSpace(sourceDirectory)) return 0;
 
 string outputDirectory = sourceDirectory + "\\" + JunkFolderName;
+
+
 
 JunkIdentifier identifier = new(timeToJunk);
 
@@ -100,16 +104,27 @@ List<IOSEntity> GetOSObjectsInDirectory(string path)
 
 public class Options
 {
+
+    #if RELEASE
+    static readonly string DEFAULT_WORKING_DIRECTORY = Directory.GetCurrentDirectory();
+    #endif
+    #if DEBUG
+        static readonly string DEFAULT_WORKING_DIRECTORY = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+    #endif
+
     [Option('v', "verbose", Required = false, HelpText = "Set output to verbose messages.")]
     public bool Verbose { get; set; }
 
+
+    /// <summary>
+    /// TODO: Implement prompting the user before moving directories by default and make this flag work
+    /// </summary>
     [Option('n', "no-prompt", Required = false, HelpText = "Whether the program should confirm with the user to move files and directories.")]
     public bool NoPrompt { get; set; }
 
     [Option('s', "source-directory", Required = false, HelpText = "The directory to clean.")]
-    public string SourceDirectory { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); // Logical Desktop
+    public string SourceDirectory { get; set; } = DEFAULT_WORKING_DIRECTORY; // Current working directory by default
 
-    //TODO: convert this to a datetime parsable string
     [Option('t', "time-to-look-back", Required = false, HelpText = "How much time to look back before considering the file or directory junk. Default is 1m. Example: 3m 5w 2d 5h")]
     public string TimeToJunk { get; set; } = "1m";
 
