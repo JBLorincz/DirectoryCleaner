@@ -87,7 +87,6 @@ int Clean(bool verboseMode = false,string sourceDirectory = "",string timeToJunk
     if (!Directory.Exists(sourceDirectory))
     {
         Console.WriteLine("Source directory does not exist!");
-        Thread.Sleep(1000);
         return 1;
     }
 
@@ -131,7 +130,6 @@ int Clean(bool verboseMode = false,string sourceDirectory = "",string timeToJunk
         }
     }
     Console.WriteLine($"Cleanup finished! Moved {numberOfObjectsMoved} objects to {outputDirectory}");
-    Thread.Sleep(1000);
     return 0;
 
 }
