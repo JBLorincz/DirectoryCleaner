@@ -73,6 +73,8 @@ List<IOSEntity> GetOSObjectsInDirectory(string sourceDirectory, string outputDir
 int Clean(bool verboseMode = false,string sourceDirectory = "",string timeToJunk = "1m",string JunkFolderName = "Junk"
 )
 {
+    int numberOfObjectsMoved = 0;
+    Console.WriteLine($"Cleaning {sourceDirectory}...");
     string outputDirectory = sourceDirectory + "\\" + JunkFolderName;
 
 
@@ -117,7 +119,8 @@ int Clean(bool verboseMode = false,string sourceDirectory = "",string timeToJunk
                 entity.MoveToDirectory(outputDirectory);
 
                 if (verboseMode) Console.WriteLine($"Moving {entity.Name} to {outputDirectory}");
-                else Console.WriteLine($"Junking {entity.Name}");
+                else Console.WriteLine($"Moving {entity.Name} to {JunkFolderName}");
+                numberOfObjectsMoved++;
             }
             catch (Exception exc)
             {
@@ -127,7 +130,7 @@ int Clean(bool verboseMode = false,string sourceDirectory = "",string timeToJunk
             Console.WriteLine();
         }
     }
-    Console.WriteLine("Cleanup finished!");
+    Console.WriteLine($"Cleanup finished! Moved {numberOfObjectsMoved} objects to {outputDirectory}");
     Thread.Sleep(1000);
     return 0;
 
