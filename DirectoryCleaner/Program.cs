@@ -17,7 +17,7 @@ RootCommand rootCommand = new();
 var sourceDirectoryOption = new Option<string>("--source-directory", () => DEFAULT_WORKING_DIRECTORY, "The directory to clean. By default is the working directory");
 sourceDirectoryOption.AddAlias("-d");
 
-var timeToLookBackOption = new Option<string>("--time-to-look-back", () => "1m", "How much time to look back before considering the file or directory junk. Example: 3m 5w 2d 5h");
+var timeToLookBackOption = new Option<string>("--time-to-look-back", () => "1m", "How much time to look back before considering the file or directory junk.  Example: 3m 5w 2d 5h");
 timeToLookBackOption.AddAlias("-t");
 
 var junkFolderNameOption = new Option<string>("--output-directory", () => "Junk", "What the output folder is named.");
@@ -36,9 +36,8 @@ rootCommand.SetHandler((directoryToClean,timeUntilJunk,junkFolderName,verboseMod
     if (verboseMode)
     {
         Console.WriteLine($"--source-directory = {directoryToClean}");
-        Console.WriteLine($"--t = {timeUntilJunk}");
-        Console.WriteLine($"-j = {junkFolderName}");
-        Console.WriteLine($"-v = {verboseMode}");
+        Console.WriteLine($"--time-to-look-back = {timeUntilJunk}");
+        Console.WriteLine($"--output-directory = {junkFolderName}");
     }
 
     if (string.IsNullOrWhiteSpace(directoryToClean)) return;

@@ -6,7 +6,7 @@
     },
     "Verbose Profile": {
       "commandName": "Project",
-      "commandLineArgs": "--verbose"
+      "commandLineArgs": "-t \"1m 3w 2d 6h\"\r\n--verbose\r\n"
     }
   }
 }

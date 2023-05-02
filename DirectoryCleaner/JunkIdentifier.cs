@@ -34,7 +34,7 @@ namespace DirectoryCleaner
 
             if (parseableTokens.Count < 1) throw new InvalidOperationException("Cannot understand the timestring provided.");
 
-            int months = 0, weeks = 0, days = 0;
+            int months = 0, weeks = 0, days = 0, hours = 0;
             foreach (Match match in parseableTokens)
             {
                 string precedent = match.Value.Substring(0, match.Length - 1);
@@ -51,11 +51,14 @@ namespace DirectoryCleaner
                     case 'm':
                         months += value;
                         break;
+                    case 'h':
+                        hours += value;
+                        break;
 
                 }
 
             }
-            return TimeSpan.FromDays(days) + TimeSpan.FromDays(7 * weeks) + TimeSpan.FromDays(30 * months);
+            return TimeSpan.FromHours(hours) + TimeSpan.FromDays(days) + TimeSpan.FromDays(7 * weeks) + TimeSpan.FromDays(30 * months);
         }
     }
 }
